@@ -1,115 +1,214 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bosquesito</title>
-    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-    <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
-    <script src="https://rawgit.com/mayognaise/aframe-gif-component/master/dist/aframe-gif-component.min.js"></script>
+    <!-- A-Frame 1.5.0 - mucho más rápido que 1.0.4 -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <style>
+        body { margin: 0; overflow: hidden; background: #1a3a2a; }
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #1a3a2a; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 9999;
+            transition: opacity 1s ease;
+        }
+        #loading-screen.fade-out { opacity: 0; pointer-events: none; }
+        #loading-text {
+            color: #7fc97f; font-family: monospace; font-size: 1.2rem;
+            margin-bottom: 1rem; letter-spacing: 2px;
+        }
+        #loading-bar-outer {
+            width: 260px; height: 8px; border: 1px solid #7fc97f;
+            border-radius: 4px; overflow: hidden;
+        }
+        #loading-bar-inner {
+            width: 0%; height: 100%; background: #7fc97f;
+            transition: width 0.3s ease;
+        }
+        #loading-tip {
+            color: #4a8a5a; font-family: monospace; font-size: 0.75rem;
+            margin-top: 1rem; max-width: 240px; text-align: center;
+        }
+    </style>
 </head>
 
-
 <body>
-    <a-scene>
-        <a-assets>
-            <a-asset-item id="arbolito1" src="arbolitos/arbolito1.gltf"></a-asset-item>
-            <a-asset-item id="arbolito2" src="arbolitos/arbolito2.gltf"></a-asset-item>
-            <a-asset-item id="arbolito3" src="arbolitos/arbolito2.gltf"></a-asset-item>
-            <a-asset-item id="arbolito4" src="arbolitos/arbolito4.gltf"></a-asset-item>
-            <a-asset-item id="arbolito5" src="arbolitos/arbolito5.gltf"></a-asset-item>
-            <a-asset-item id="arbolito6" src="arbolitos/arbolito6.gltf"></a-asset-item>
-            <a-asset-item id="arbolito7" src="arbolitos/arbolito7.gltf"></a-asset-item>
-            <a-asset-item id="arbolito8" src="arbolitos/arbolito1.gltf"></a-asset-item>
-            <a-asset-item id="arbolito9" src="arbolitos/arbolito9.gltf"></a-asset-item>
-            <a-asset-item id="arbolito10" src="arbolitos/arbolito10.gltf"></a-asset-item>
-            <a-asset-item id="arbolito11" src="arbolitos/arbolito11.gltf"></a-asset-item>
-            <a-asset-item id="arbolito12" src="arbolitos/arbolito10.gltf"></a-asset-item>
-            <a-asset-item id="arbolito13" src="arbolitos/arbolito13.gltf"></a-asset-item>
-            <a-asset-item id="arbolito14" src="arbolitos/arbolito14.gltf"></a-asset-item>
-            <a-asset-item id="arbolito15" src="arbolitos/arbolito14.gltf"></a-asset-item>
-            <a-asset-item id="arbolito16" src="arbolitos/arbolito16.gltf"></a-asset-item>
-            <a-asset-item id="arbolito17" src="arbolitos/arbolito16.gltf"></a-asset-item>
-            <a-asset-item id="arbolito18" src="arbolitos/arbolito18.gltf"></a-asset-item>
-            <a-asset-item id="arbolito19" src="arbolitos/arbolito4.gltf"></a-asset-item>
-            <a-asset-item id="arbolito20" src="arbolitos/arbolito4.gltf"></a-asset-item>
-            <a-asset-item id="arbolito21" src="arbolitos/arbolito21.gltf"></a-asset-item>
-            <a-asset-item id="arbolito22" src="arbolitos/arbolito21.gltf"></a-asset-item>
-            <a-asset-item id="arbolito23" src="arbolitos/arbolito4.gltf"></a-asset-item>
-            <a-asset-item id="arbolito24" src="arbolitos/arbolito24.gltf"></a-asset-item>
-            <a-asset-item id="arbolito25" src="arbolitos/arbolito25.gltf"></a-asset-item>
-            <a-asset-item id="arbolito26" src="arbolitos/arbolito25.gltf"></a-asset-item>
-            <!-- <img id="cielo" src="assets/h.jpg"> -->
-        </a-assets>
 
-        <!-- piso -->
-        <a-entity position="-3.690 0.9  -5.7 " rotation="0 -5.750 0" gltf-model="#arbolito2" scale="-8.070 0 -8.7 "></a-entity>
+<div id="loading-screen">
+    <div id="loading-text">🌳 cargando bosquesito...</div>
+    <div id="loading-bar-outer"><div id="loading-bar-inner"></div></div>
+    <div id="loading-tip">movete con WASD · mirá con el mouse · en móvil: tocá y deslizá</div>
+</div>
 
-        <!-- árboles -->
-        <a-entity position="1 0 1" rotation="0 -270 0" gltf-model="#arbolito26" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="4 0 -2" rotation="0 -270 0" gltf-model="#arbolito3" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="6 0 -4" rotation="0 -270 0" gltf-model="#arbolito4" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="0 0 -4" rotation="0 -270 0" gltf-model="#arbolito5" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="0 0 -9" rotation="0 -270 0" gltf-model="#arbolito6" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="9 0 -3" rotation="0 -270 0" gltf-model="#arbolito9" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="6 0 -9" rotation="0 -270 0" gltf-model="#arbolito12" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="3 0 -11" rotation="0 -270 0" gltf-model="#arbolito17" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="9 0 -8" rotation="0 -270 0" gltf-model="#arbolito18" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="13 0 -3" rotation="0 -270 0" gltf-model="#arbolito22" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="5 0 -14" rotation="0 -270 0" gltf-model="#arbolito24" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="1 0 -13 " rotation="0 -270 0" gltf-model="#arbolito25" scale="0.5 0.5 0.5"></a-entity>
+<a-scene
+    loading-screen="enabled: false"
+    renderer="antialias: false; physicallyCorrectLights: false; maxCanvasWidth: 1920; maxCanvasHeight: 1080"
+    vr-mode-ui="enabled: false"
+    fog="type: exponential; color: #2d5a3d; density: 0.03">
 
-        <a-entity position="-2 0 -2 " rotation="0 -270 0" gltf-model="#arbolito1" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-4 0 2" rotation="0 -270 0" gltf-model="#arbolito3" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="0 0 4" rotation="0 -270 0" gltf-model="#arbolito5" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="0 0 9" rotation="0 -270 0" gltf-model="#arbolito6" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="9 0 3 " rotation="0 -270 0" gltf-model="#arbolito9" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="6 0 2 " rotation="0 -270 0" gltf-model="#arbolito10" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="7 0 9 " rotation="0 -270 0" gltf-model="#arbolito11" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-7 0 3  " rotation="0 -270 0" gltf-model="#arbolito15" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-3 0 11" rotation="0 -270 0" gltf-model="#arbolito17" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-9 0 8 " rotation="0 -270 0" gltf-model="#arbolito18" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-8 0 -7 " rotation="0 -270 0" gltf-model="#arbolito19" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-13 0 3 " rotation="0 -270 0" gltf-model="#arbolito22" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-10 0 1 " rotation="0 -270 0" gltf-model="#arbolito23" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-10 0 14" rotation="0 -270 0" gltf-model="#arbolito24" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-5 0 9 " rotation="0 -270 0" gltf-model="#arbolito26" scale="0.5 0.5 0.5"></a-entity>
+    <a-assets timeout="30000">
+        <!-- Sólo los archivos únicos reales (no duplicados) -->
+        <a-asset-item id="arbolito1"  src="arbolitos/arbolito1.gltf"></a-asset-item>
+        <a-asset-item id="arbolito2"  src="arbolitos/arbolito2.gltf"></a-asset-item>
+        <a-asset-item id="arbolito4"  src="arbolitos/arbolito4.gltf"></a-asset-item>
+        <a-asset-item id="arbolito5"  src="arbolitos/arbolito5.gltf"></a-asset-item>
+        <a-asset-item id="arbolito6"  src="arbolitos/arbolito6.gltf"></a-asset-item>
+        <a-asset-item id="arbolito7"  src="arbolitos/arbolito7.gltf"></a-asset-item>
+        <a-asset-item id="arbolito9"  src="arbolitos/arbolito9.gltf"></a-asset-item>
+        <a-asset-item id="arbolito10" src="arbolitos/arbolito10.gltf"></a-asset-item>
+        <a-asset-item id="arbolito11" src="arbolitos/arbolito11.gltf"></a-asset-item>
+        <a-asset-item id="arbolito13" src="arbolitos/arbolito13.gltf"></a-asset-item>
+        <a-asset-item id="arbolito14" src="arbolitos/arbolito14.gltf"></a-asset-item>
+        <a-asset-item id="arbolito16" src="arbolitos/arbolito16.gltf"></a-asset-item>
+        <a-asset-item id="arbolito17" src="arbolitos/arbolito16.gltf"></a-asset-item>
+        <a-asset-item id="arbolito18" src="arbolitos/arbolito18.gltf"></a-asset-item>
+        <a-asset-item id="arbolito21" src="arbolitos/arbolito21.gltf"></a-asset-item>
+        <a-asset-item id="arbolito24" src="arbolitos/arbolito24.gltf"></a-asset-item>
+        <a-asset-item id="arbolito25" src="arbolitos/arbolito25.gltf"></a-asset-item>
+        <audio id="musica" src="assets/ABEL.mp3" preload="none"></audio>
+    </a-assets>
 
-        <a-entity position="-14 0 12" rotation="0 -270 0" gltf-model="#arbolito3" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="10 0 4" rotation="0 -270 0" gltf-model="#arbolito5" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="10 0 9" rotation="0 -270 0" gltf-model="#arbolito6" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="16 0 2" rotation="0 -270 0" gltf-model="#arbolito10" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="14.5 0 7.5" rotation="0 -270 0" gltf-model="#arbolito11" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="10 0 -12.5" rotation="0 -270 0" gltf-model="#arbolito14" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-17 0 3" rotation="0 -270 0" gltf-model="#arbolito15" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-11 0 5" rotation="0 -270 0" gltf-model="#arbolito16" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-16 0 7" rotation="0 -270 0" gltf-model="#arbolito18" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-18 0 -7" rotation="0 -270 0" gltf-model="#arbolito19" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-21 0 0.5" rotation="0 -270 0" gltf-model="#arbolito21" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-2.8 0 14" rotation="0 -270 0" gltf-model="#arbolito24" scale="0.5 0.5 0.5"></a-entity>
+    <!-- Cámara con controles WASD -->
+    <a-entity id="rig" position="0 0 0">
+        <a-camera
+            wasd-controls="acceleration: 30"
+            look-controls="pointerLockEnabled: false"
+            position="0 1.6 0"
+            far="60">
+        </a-camera>
+    </a-entity>
 
-        <a-entity position="-3.5 0 -9" rotation="0 -270 0" gltf-model="#arbolito1" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-5.5 0 -3.5" rotation="0 -270 0" gltf-model="#arbolito2" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="11 0 13.5" rotation="0 -270 0" gltf-model="#arbolito3" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-15 0 -7" rotation="0 -270 0" gltf-model="#arbolito5" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-18 0 -3" rotation="0 -270 0" gltf-model="#arbolito6" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-7.5 0 -10.5" rotation="0 -270 0" gltf-model="#arbolito7" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-12 0 -2" rotation="0 -270 0" gltf-model="#arbolito8" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="8 0 -15" rotation="0 -270 0" gltf-model="#arbolito9" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="4 0 14" rotation="0 -270 0" gltf-model="#arbolito10" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="18.5 0 -7" rotation="0 -270 0" gltf-model="#arbolito12" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-1.5 0 -16.5" rotation="0 -270 0" gltf-model="#arbolito13" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="20 0 -2.5" rotation="0 -270 0" gltf-model="#arbolito16" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity position="-9 0 -8" rotation="0 -270 0" gltf-model="#arbolito24" scale="0.5 0.5 0.5"></a-entity>
+    <!-- Piso (usando arbolito2 como terreno, igual que el original) -->
+    <a-entity position="-3.690 0.9 -5.7" rotation="0 -5.750 0"
+              gltf-model="#arbolito2" scale="-8.070 0 -8.7"></a-entity>
 
-        <!-- música -->
-        <a-sound src="src: url(./assets/ABEL.mp3)" autoplay="true" position="0 2 5"></a-sound>
+    <!-- === ÁRBOLES LADO DERECHO / FRENTE === -->
+    <a-entity position="1 0 1"      rotation="0 -270 0" gltf-model="#arbolito25" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="4 0 -2"     rotation="0 -270 0" gltf-model="#arbolito2"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="6 0 -4"     rotation="0 -270 0" gltf-model="#arbolito4"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="0 0 -4"     rotation="0 -270 0" gltf-model="#arbolito5"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="0 0 -9"     rotation="0 -270 0" gltf-model="#arbolito6"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="9 0 -3"     rotation="0 -270 0" gltf-model="#arbolito9"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="6 0 -9"     rotation="0 -270 0" gltf-model="#arbolito10" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="3 0 -11"    rotation="0 -270 0" gltf-model="#arbolito17" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="9 0 -8"     rotation="0 -270 0" gltf-model="#arbolito18" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="13 0 -3"    rotation="0 -270 0" gltf-model="#arbolito21" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="5 0 -14"    rotation="0 -270 0" gltf-model="#arbolito24" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="1 0 -13"    rotation="0 -270 0" gltf-model="#arbolito25" scale="0.5 0.5 0.5"></a-entity>
 
-        <!-- cielo -->
-        <a-sky animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"  material="shader:gif;src:url(./assets/100.gif); repeat: 2 2; transparent: true;alphaTest:0.5; side:double"></a-sky>
+    <!-- === ÁRBOLES LADO IZQUIERDO === -->
+    <a-entity position="-2 0 -2"    rotation="0 -270 0" gltf-model="#arbolito1"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-4 0 2"     rotation="0 -270 0" gltf-model="#arbolito2"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="0 0 4"      rotation="0 -270 0" gltf-model="#arbolito5"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="0 0 9"      rotation="0 -270 0" gltf-model="#arbolito6"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="9 0 3"      rotation="0 -270 0" gltf-model="#arbolito9"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="6 0 2"      rotation="0 -270 0" gltf-model="#arbolito10" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="7 0 9"      rotation="0 -270 0" gltf-model="#arbolito11" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-7 0 3"     rotation="0 -270 0" gltf-model="#arbolito14" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-3 0 11"    rotation="0 -270 0" gltf-model="#arbolito17" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-9 0 8"     rotation="0 -270 0" gltf-model="#arbolito18" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-8 0 -7"    rotation="0 -270 0" gltf-model="#arbolito4"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-13 0 3"    rotation="0 -270 0" gltf-model="#arbolito21" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-10 0 1"    rotation="0 -270 0" gltf-model="#arbolito4"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-10 0 14"   rotation="0 -270 0" gltf-model="#arbolito24" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-5 0 9"     rotation="0 -270 0" gltf-model="#arbolito25" scale="0.5 0.5 0.5"></a-entity>
 
-    </a-scene>
+    <!-- === ÁRBOLES PERIFERIA === -->
+    <a-entity position="-14 0 12"   rotation="0 -270 0" gltf-model="#arbolito2"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="10 0 4"     rotation="0 -270 0" gltf-model="#arbolito5"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="10 0 9"     rotation="0 -270 0" gltf-model="#arbolito6"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="16 0 2"     rotation="0 -270 0" gltf-model="#arbolito10" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="14.5 0 7.5" rotation="0 -270 0" gltf-model="#arbolito11" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="10 0 -12.5" rotation="0 -270 0" gltf-model="#arbolito14" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-17 0 3"    rotation="0 -270 0" gltf-model="#arbolito14" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-11 0 5"    rotation="0 -270 0" gltf-model="#arbolito16" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-16 0 7"    rotation="0 -270 0" gltf-model="#arbolito18" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-18 0 -7"   rotation="0 -270 0" gltf-model="#arbolito4"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-21 0 0.5"  rotation="0 -270 0" gltf-model="#arbolito21" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-2.8 0 14"  rotation="0 -270 0" gltf-model="#arbolito24" scale="0.5 0.5 0.5"></a-entity>
+
+    <a-entity position="-3.5 0 -9"   rotation="0 -270 0" gltf-model="#arbolito1"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-5.5 0 -3.5" rotation="0 -270 0" gltf-model="#arbolito2"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="11 0 13.5"   rotation="0 -270 0" gltf-model="#arbolito2"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-15 0 -7"    rotation="0 -270 0" gltf-model="#arbolito5"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-18 0 -3"    rotation="0 -270 0" gltf-model="#arbolito6"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-7.5 0 -10.5" rotation="0 -270 0" gltf-model="#arbolito7" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-12 0 -2"    rotation="0 -270 0" gltf-model="#arbolito1"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="8 0 -15"     rotation="0 -270 0" gltf-model="#arbolito9"  scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="4 0 14"      rotation="0 -270 0" gltf-model="#arbolito10" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="18.5 0 -7"   rotation="0 -270 0" gltf-model="#arbolito10" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-1.5 0 -16.5" rotation="0 -270 0" gltf-model="#arbolito13" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="20 0 -2.5"   rotation="0 -270 0" gltf-model="#arbolito16" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity position="-9 0 -8"     rotation="0 -270 0" gltf-model="#arbolito24" scale="0.5 0.5 0.5"></a-entity>
+
+    <!-- Cielo: color sólido en lugar del GIF roto (rawgit está muerto) -->
+    <a-sky color="#1a4a2a"
+           animation="property: components.material.material.color; type: color;
+                      from: #1a2a3a; to: #2a4a1a; dir: alternate;
+                      loop: true; dur: 8000; easing: easeInOutSine">
+    </a-sky>
+
+    <!-- Luz ambiente suave -->
+    <a-light type="ambient" color="#4a7a5a" intensity="0.8"></a-light>
+    <a-light type="directional" color="#a0d0b0" intensity="0.6"
+             position="1 3 1"></a-light>
+
+</a-scene>
+
+<script>
+    // Pantalla de carga con barra de progreso real
+    const loadingScreen = document.getElementById('loading-screen');
+    const bar = document.getElementById('loading-bar-inner');
+    const loadingText = document.getElementById('loading-text');
+
+    const scene = document.querySelector('a-scene');
+    const assets = document.querySelector('a-assets');
+
+    let totalAssets = document.querySelectorAll('a-asset-item').length;
+    let loadedAssets = 0;
+
+    function updateBar() {
+        loadedAssets++;
+        const pct = Math.min(100, Math.round((loadedAssets / totalAssets) * 100));
+        bar.style.width = pct + '%';
+        loadingText.textContent = '🌳 cargando bosquesito... ' + pct + '%';
+    }
+
+    document.querySelectorAll('a-asset-item').forEach(item => {
+        item.addEventListener('loaded', updateBar);
+        item.addEventListener('error', updateBar); // contamos errores también para no quedarnos colgados
+    });
+
+    scene.addEventListener('loaded', () => {
+        bar.style.width = '100%';
+        loadingText.textContent = '🌳 ¡bosquesito listo!';
+        setTimeout(() => {
+            loadingScreen.classList.add('fade-out');
+            setTimeout(() => loadingScreen.remove(), 1000);
+        }, 400);
+
+        // Música: esperar interacción del usuario (política de browsers modernos)
+        const audio = document.getElementById('musica');
+        const startAudio = () => {
+            audio.play().catch(() => {});
+            document.removeEventListener('click', startAudio);
+            document.removeEventListener('keydown', startAudio);
+        };
+        document.addEventListener('click', startAudio);
+        document.addEventListener('keydown', startAudio);
+    });
+
+    // Fallback: si tarda más de 20s, entrar igual
+    setTimeout(() => {
+        if (loadingScreen.parentNode) {
+            loadingScreen.classList.add('fade-out');
+            setTimeout(() => loadingScreen.remove(), 1000);
+        }
+    }, 20000);
+</script>
+
 </body>
-
 </html>
